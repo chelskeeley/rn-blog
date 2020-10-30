@@ -1,23 +1,33 @@
 import React, { useContext } from "react";
-import { View, Text, StyleSheet, FlatList, Button, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 import { Context as BlogContext } from "../context/BlogContext";
 
 const IndexScreen = ({ navigation }) => {
-  const { state, addBlogPost, deleteBlogPost } = useContext(BlogContext);
+  const { state, deleteBlogPost } = useContext(BlogContext);
 
   return (
     <View>
-      <Button title="Add Post" onPress={addBlogPost} />
       <FlatList
         data={state}
-        keyExtractor={blogPost => blogPost.title}
+        keyExtractor={(blogPost) => blogPost.title}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity onPress={() => navigation.navigate("Show", { id: item.id})}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Show", { id: item.id })}
+            >
               <View style={styles.row}>
-                <Text style={styles.title}>{item.title} - {item.id}</Text>
+                <Text style={styles.title}>
+                  {item.title} - {item.id}
+                </Text>
                 <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
                   <Feather name="trash" style={styles.icon} />
                 </TouchableOpacity>
@@ -36,9 +46,9 @@ IndexScreen.navigationOptions = ({ navigation }) => {
       <TouchableOpacity onPress={() => navigation.navigate("Create")}>
         <Feather name="plus" size={30} />
       </TouchableOpacity>
-    )
-  }
-}
+    ),
+  };
+};
 
 const styles = StyleSheet.create({
   row: {
@@ -47,14 +57,14 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 10,
     borderTopWidth: 1,
-    borderColor: "grey"
+    borderColor: "grey",
   },
   title: {
-    fontSize: 18
+    fontSize: 18,
   },
   icon: {
-    fontSize: 24
-  }
+    fontSize: 24,
+  },
 });
 
 export default IndexScreen;
